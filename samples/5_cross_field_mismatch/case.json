@@ -1,0 +1,5 @@
+{
+  "title": "Edge \u2014 subtle cross-field inconsistencies",
+  "expect": "pending",
+  "why": "Every field is individually valid, but GSTIN is Karnataka while address is Maharashtra, and the PAN differs by one character from the one inside the GSTIN."
+}

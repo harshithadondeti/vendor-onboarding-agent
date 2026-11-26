@@ -1,0 +1,5 @@
+{
+  "title": "Edge \u2014 clean-looking vendor reusing another vendor's bank account",
+  "expect": "rejected",
+  "why": "Passes every document and format check. Only the cross-vendor check catches that the account already belongs to Deccan Cargo Movers."
+}

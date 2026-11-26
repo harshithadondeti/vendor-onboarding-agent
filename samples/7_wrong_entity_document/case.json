@@ -1,0 +1,5 @@
+{
+  "title": "Edge \u2014 certificate issued to a different company",
+  "expect": "pending",
+  "why": "Form and bank are fine, but the incorporation certificate belongs to the parent company. Only reading the document reveals it."
+}

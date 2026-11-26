@@ -1,0 +1,27 @@
+{
+  "legal_name": "Kaveri Textiles Private Limited",
+  "country": "IN",
+  "website": "kaveritextiles.in",
+  "address": {
+    "line1": "88 Kalbadevi Road",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "postal_code": "400002"
+  },
+  "contact": {
+    "name": "Suresh Gowda",
+    "email": "accounts@kaveritextiles.in",
+    "phone": "+91 22 2201 7788"
+  },
+  "tax": {
+    "tax_id": "29AAACK5521Q1Z3",
+    "pan": "AAACK5521R"
+  },
+  "bank": {
+    "account_holder": "Kaveri Textiles Pvt. Ltd.",
+    "account_number": "917020045566123",
+    "ifsc": "UTIB0000004",
+    "bank_name": "Axis Bank",
+    "country": "IN"
+  }
+}

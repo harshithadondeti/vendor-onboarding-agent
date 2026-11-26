@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vendor Onboarding Agent</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#14171f;--mute:#667085;--line:#e4e7ec;--acc:#3b5bdb;
+--pass:#12b76a;--passbg:#ecfdf3;--warn:#f79009;--warnbg:#fffaeb;--fix:#dc6803;--fixbg:#fff4e5;--block:#d92d20;--blockbg:#fef3f2}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#101828;color:#fff;padding:14px 28px;display:flex;align-items:center;gap:24px}
+header h1{font-size:17px;margin:0;font-weight:600}header .sub{color:#98a2b3;font-size:12px}
+nav{margin-left:auto;display:flex;gap:4px}nav button{background:none;border:0;color:#d0d5dd;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:14px}
+nav button.on{background:#1d2939;color:#fff}
+.stats{display:flex;gap:10px}.stat{background:#1d2939;border-radius:8px;padding:4px 12px;font-size:12px;color:#d0d5dd}.stat b{color:#fff;font-size:14px;margin-right:4px}
+main{max-width:1320px;margin:22px auto;padding:0 24px}
+.grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+h2{font-size:15px;margin:0 0 12px}h3{font-size:13px;margin:16px 0 8px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.sample{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:center}
+.sample .t{font-weight:600;font-size:13px}.sample .w{color:var(--mute);font-size:12px}
+.sample .acts{margin-left:auto;display:flex;flex-direction:column;gap:4px}
+button.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap}
+button.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}button.btn:hover{filter:brightness(.95)}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;text-transform:capitalize}
+.pill.approved,.pill.pass{background:var(--passbg);color:#027a48}.pill.pending,.pill.fix{background:var(--fixbg);color:#b54708}
+.pill.rejected,.pill.block{background:var(--blockbg);color:#b42318}.pill.running{background:#eef4ff;color:var(--acc)}.pill.warn{background:var(--warnbg);color:#b54708}
+.pill.expect{background:#f2f4f7;color:var(--mute);font-weight:500}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}label{display:block;font-size:12px;color:var(--mute);margin:6px 0 2px}
+input,select{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;font:inherit;font-size:13px}
+details{border-top:1px solid var(--line);padding-top:6px;margin-top:10px}summary{cursor:pointer;font-weight:600;font-size:13px}
+/* live run */
+.empty{color:var(--mute);text-align:center;padding:60px 20px}
+.runhead{display:flex;align-items:center;gap:12px;margin-bottom:14px}.runhead .n{font-size:18px;font-weight:650}
+.runhead .meta{color:var(--mute);font-size:12px}
+.pipe{display:flex;gap:6px;margin-bottom:16px}
+.step{flex:1;border-radius:8px;padding:8px;background:#f2f4f7;font-size:11.5px;color:var(--mute);border:1px solid transparent;position:relative;transition:all .3s}
+.step .i{font-size:15px;display:block;margin-bottom:2px}
+.step.running{background:#eef4ff;color:var(--acc);border-color:#c7d7fe}.step.running .i{animation:spin 1s linear infinite;display:inline-block}
+.step.pass{background:var(--passbg);color:#027a48}.step.warn{background:var(--warnbg);color:#b54708}
+.step.fix{background:var(--fixbg);color:#b54708}.step.block{background:var(--blockbg);color:#b42318}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stage{border:1px solid var(--line);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.stage .sh{display:flex;align-items:center;gap:10px;padding:9px 12px;background:#fcfcfd;font-weight:600;font-size:13px}
+.stage .sh .ms{margin-left:auto;color:var(--mute);font-weight:400;font-size:12px}
+.chk{display:flex;gap:10px;padding:7px 12px;border-top:1px solid var(--line);font-size:13px}
+.chk .dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:none}
+.dot.pass{background:var(--pass)}.dot.warn{background:var(--warn)}.dot.fix{background:var(--fix)}.dot.block{background:var(--block)}
+.chk .r{font-weight:600;min-width:190px}.chk .d{color:#344054}
+.decision{border-radius:12px;padding:16px;margin-bottom:14px;border:1px solid}
+.decision.approved{background:var(--passbg);border-color:#a6f4c5}.decision.pending{background:var(--fixbg);border-color:#fedf89}
+.decision.rejected{background:var(--blockbg);border-color:#fecdca}
+.decision .big{font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.decision ul{margin:8px 0 0 18px;padding:0}
+.msg{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px;font-size:13px;margin-top:10px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* dashboard */
+table{width:100%;border-collapse:collapse}th{text-align:left;font-size:12px;color:var(--mute);font-weight:600;padding:8px;border-bottom:1px solid var(--line)}
+td{padding:10px 8px;border-bottom:1px solid var(--line);font-size:13px}tr.click{cursor:pointer}tr.click:hover{background:#f9fafb}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .v{font-size:26px;font-weight:700}.kpi .l{color:var(--mute);font-size:12px}
+.filters{display:flex;gap:6px;margin-bottom:10px}.filters button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 12px;cursor:pointer;font-size:12px}
+.filters button.on{background:#101828;color:#fff;border-color:#101828}
+.bar{display:flex;height:8px;border-radius:99px;overflow:hidden;background:#f2f4f7;width:120px}.bar span{display:block}
+.hidden{display:none}
+.ev{margin-top:6px}.ev summary{font-size:12px;color:var(--acc);font-weight:500}
+.ev pre{white-space:pre-wrap;background:#f9fafb;border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px;margin:6px 0 0}
+.ev mark{background:#eef4ff;color:var(--acc);border-radius:3px;padding:0 2px}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Vendor Onboarding Agent</h1><div class="sub">Submission → verification → approve / pending / reject</div></div>
+  <div class="stats" id="hstats"></div>
+  <nav><button id="tab-run" class="on" onclick="tab('run')">Live run</button><button id="tab-dash" onclick="tab('dash')">Dashboard</button></nav>
+</header>
+<main>
+<section id="view-run" class="grid">
+  <div>
+    <div class="card">
+      <h2>Test submissions</h2>
+      <div id="samples"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>Vendor submission form</h2>
+      <form id="f" onsubmit="submitForm(event)">
+        <input type="hidden" name="resubmission_of" id="resub">
+        <div id="resubnote" class="pill pending hidden" style="margin-bottom:8px"></div>
+        <label>Registered legal name</label><input name="legal_name">
+        <div class="row"><div><label>Country</label><select name="country"><option value="IN">India</option><option value="US">United States</option><option value="GB">United Kingdom</option></select></div>
+        <div><label>Website</label><input name="website"></div></div>
+        <details><summary>Address</summary>
+          <label>Address line</label><input name="address.line1">
+          <div class="row"><div><label>City</label><input name="address.city"></div><div><label>State / region</label><input name="address.state"></div></div>
+          <label>Postal code</label><input name="address.postal_code"></details>
+        <details><summary>Contact</summary>
+          <label>Contact name</label><input name="contact.name">
+          <div class="row"><div><label>Email</label><input name="contact.email"></div><div><label>Phone</label><input name="contact.phone"></div></div></details>
+        <details open><summary>Tax</summary>
+          <div class="row"><div><label>Tax ID (GSTIN / EIN / VAT)</label><input name="tax.tax_id"></div><div><label>PAN (India)</label><input name="tax.pan"></div></div></details>
+        <details open><summary>Bank</summary>
+          <label>Account holder name</label><input name="bank.account_holder">
+          <div class="row"><div><label>Account number</label><input name="bank.account_number"></div><div><label>Bank name</label><input name="bank.bank_name"></div></div>
+          <div class="row"><div><label>IFSC (IN)</label><input name="bank.ifsc"></div><div><label>Routing no. (US)</label><input name="bank.routing_number"></div></div>
+          <div class="row"><div><label>Sort code (UK)</label><input name="bank.sort_code"></div><div><label>Bank country</label><input name="bank.country" placeholder="IN / US / GB"></div></div></details>
+        <details open><summary>Documents (PDF)</summary>
+          <label>Tax registration certificate</label><input type="file" name="tax_certificate" accept=".pdf">
+          <label>Bank proof</label><input type="file" name="bank_proof" accept=".pdf">
+          <label>Certificate of incorporation</label><input type="file" name="incorporation_certificate" accept=".pdf"></details>
+        <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" type="submit">Run onboarding</button><button class="btn ghost" type="button" onclick="clearForm()">Clear</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="card" id="live"><div class="empty">Run a test submission or fill the form.<br>Each stage appears here as it executes.</div></div>
+</section>
+
+<section id="view-dash" class="hidden">
+  <div class="kpis" id="kpis"></div>
+  <div class="card">
+    <div style="display:flex;align-items:center"><h2 style="margin:0">Run history</h2>
+      <div class="filters" style="margin:0 0 0 auto" id="filters"></div></div>
+    <table><thead><tr><th>When</th><th>Vendor</th><th>Country</th><th>Status</th><th>Checks</th><th>Summary</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+  </div>
+</section>
+</main>
+<script>
+const ICON={queued:'○',running:'◐',pass:'✓',warn:'!',fix:'✎',block:'✕'};
+let current=null, poll=null, filter='all', samples=[];
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ago=t=>{const s=(Date.now()-new Date(t))/1000;return s<60?'just now':s<3600?Math.floor(s/60)+'m ago':s<86400?Math.floor(s/3600)+'h ago':new Date(t).toLocaleDateString()};
+
+function tab(t){$('#view-run').classList.toggle('hidden',t!=='run');$('#view-dash').classList.toggle('hidden',t!=='dash');
+  $('#tab-run').classList.toggle('on',t==='run');$('#tab-dash').classList.toggle('on',t==='dash');if(t==='dash')loadDash();}
+
+async function loadSamples(){samples=await (await fetch('/api/samples')).json();
+  $('#samples').innerHTML=samples.map(s=>`<div class="sample"><div><div class="t">${esc(s.title)}</div><div class="w">${esc(s.why)}</div>
+   <span class="pill expect">expects ${s.expect}</span></div><div class="acts"><button class="btn" onclick="runSample('${s.name}')">Run</button>
+   <button class="btn ghost" onclick="loadSample('${s.name}')">Edit</button></div></div>`).join('');}
+
+async function runSample(n){const r=await (await fetch(`/api/samples/${n}/run`,{method:'POST'})).json();watch(r.id);}
+
+function setForm(p){const f=$('#f');for(const el of f.elements){if(!el.name||el.type==='file'||el.type==='hidden')continue;
+  el.value=el.name.split('.').reduce((o,k)=>(o||{})[k],p)??'';}}
+function getPayload(){const p={};for(const el of $('#f').elements){if(!el.name||el.type==='file'||el.type==='hidden'||el.type==='submit')continue;
+  const ks=el.name.split('.');let o=p;ks.slice(0,-1).forEach(k=>o=o[k]=o[k]||{});o[ks.at(-1)]=el.value.trim();}return p;}
+function clearForm(){$('#f').reset();$('#resub').value='';$('#resubnote').classList.add('hidden');}
+
+async function loadSample(n){const d=await (await fetch('/api/samples/'+n)).json();clearForm();setForm(d.payload);
+  for(const fn of d.files){const type=fn.split('__')[0],blob=await (await fetch(`/api/samples/${n}/file/${fn}`)).blob();
+    const dt=new DataTransfer();dt.items.add(new File([blob],fn.split('__')[1],{type:'application/pdf'}));
+    const inp=$(`#f input[name=${type}]`);if(inp)inp.files=dt.files;}
+  $('#f').scrollIntoView({behavior:'smooth'});}
+
+async function submitForm(e){e.preventDefault();const fd=new FormData();fd.append('payload',JSON.stringify(getPayload()));
+  for(const k of ['tax_certificate','bank_proof','incorporation_certificate']){const f=$(`#f input[name=${k}]`).files[0];if(f)fd.append(k,f);}
+  if($('#resub').value)fd.append('resubmission_of',$('#resub').value);
+  const r=await (await fetch('/api/submissions',{method:'POST',body:fd})).json();watch(r.id);}
+
+function watch(id){current=id;tab('run');clearInterval(poll);tick();poll=setInterval(tick,350);}
+async function tick(){const r=await (await fetch('/api/runs/'+current)).json();renderRun(r);stats();if(r.status!=='running')clearInterval(poll);}
+
+const hl=t=>esc(t).replace(/\[[A-Z_]+_\d+\]/g,m=>`<mark>${m}</mark>`);
+function renderRun(r){
+  const pipe=r.events.map(e=>`<div class="step ${e.state}"><span class="i">${ICON[e.state]}</span>${esc(e.label)}</div>`).join('');
+  let dec='';
+  if(r.result){const x=r.result;
+    dec=`<div class="decision ${x.status}"><div style="display:flex;align-items:center;gap:10px"><div class="big">${x.status}</div>
+      <div style="color:var(--mute)">${esc(x.summary)}</div>
+      ${x.status==='pending'?`<button class="btn ghost" style="margin-left:auto" onclick='resubmit(${JSON.stringify(r.id)})'>Edit &amp; resubmit</button>`:''}</div>
+      ${x.reasons.length?`<ul>${x.reasons.map(z=>`<li>${esc(z)}</li>`).join('')}</ul>`:''}
+      <div class="cols"><div><h3>Message to vendor</h3><div class="msg">${esc(x.vendor_message)}</div>
+        <button class="btn ghost" style="margin-top:6px" onclick="navigator.clipboard.writeText(${esc(JSON.stringify(x.vendor_message))})">Copy</button></div>
+      <div><h3>Internal audit note</h3><div class="msg">${esc(x.internal_note)}\n\nRun ${r.id} · ${new Date(r.created_at).toLocaleString()}${r.resubmission_of?`\nResubmission of ${r.resubmission_of}`:''}</div></div></div></div>`;}
+  const stages=r.events.filter(e=>e.checks.length&&e.key!=='decision').map(e=>`<div class="stage"><div class="sh"><span class="pill ${e.state}">${ICON[e.state]} ${e.state}</span>${esc(e.label)}<span class="ms">${e.ms??''} ms</span></div>
+     ${e.checks.map(c=>`<div class="chk"><span class="dot ${c.severity}"></span><span class="r">${esc(c.rule)}</span><span class="d">${esc(c.detail)}${c.evidence?`<details class="ev"><summary>What the AI saw (redacted)</summary><pre>${hl(c.evidence)}</pre></details>`:''}</span></div>`).join('')}</div>`).join('');
+  $('#live').innerHTML=`<div class="runhead"><div><div class="n">${esc(r.vendor_name)}</div><div class="meta">${esc(r.country)} · run ${r.id}</div></div>
+    <span class="pill ${r.status}" style="margin-left:auto">${r.status}</span></div><div class="pipe">${pipe}</div>${dec}${stages}`;}
+
+async function resubmit(id){const r=await (await fetch('/api/runs/'+id)).json();clearForm();setForm(r.payload);$('#resub').value=id;
+  const n=$('#resubnote');n.textContent='Resubmitting run '+id+' — fix the flagged items and re-attach documents';n.classList.remove('hidden');$('#f').scrollIntoView({behavior:'smooth'});}
+
+async function stats(){const s=await (await fetch('/api/stats')).json();
+  $('#hstats').innerHTML=`<span class="stat"><b>${s.total}</b>runs</span><span class="stat"><b>${s.approved}</b>approved</span><span class="stat"><b>${s.pending}</b>pending</span><span class="stat"><b>${s.rejected}</b>rejected</span>`;return s;}
+
+async function loadDash(){const [s,runs]=await Promise.all([stats(),(await fetch('/api/runs')).json()]);
+  const rate=s.total?Math.round(100*s.approved/s.total):0;
+  $('#kpis').innerHTML=[['Total runs',s.total],['Approved',s.approved],['Pending vendor',s.pending],['Rejected',s.rejected],['Straight-through rate',rate+'%']]
+    .map(([l,v])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+  $('#filters').innerHTML=['all','approved','pending','rejected'].map(f=>`<button class="${f===filter?'on':''}" onclick="filter='${f}';loadDash()">${f}</button>`).join('');
+  const rows=runs.filter(r=>filter==='all'||r.status===filter);
+  $('#rows').innerHTML=rows.length?rows.map(r=>{const c=r.counts||{},t=(c.pass||0)+(c.warn||0)+(c.fix||0)+(c.block||0)||1,
+    seg=k=>`<span style="width:${100*(c[k]||0)/t}%;background:var(--${k})"></span>`;
+    return `<tr class="click" onclick="watch('${r.id}')"><td>${ago(r.created_at)}</td><td><b>${esc(r.vendor_name)}</b>${r.resubmission_of?' <span class="pill expect">resubmission</span>':''}</td>
+    <td>${esc(r.country)}</td><td><span class="pill ${r.status}">${r.status}</span></td><td><div class="bar">${seg('pass')}${seg('warn')}${seg('fix')}${seg('block')}</div></td>
+    <td style="color:var(--mute)">${esc(r.summary)}</td><td>›</td></tr>`}).join(''):`<tr><td colspan="7" class="empty">No runs yet</td></tr>`;}
+
+loadSamples();stats();
+</script>
+</body>
+</html>

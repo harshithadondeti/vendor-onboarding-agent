@@ -1,0 +1,26 @@
+{
+  "legal_name": "Thames Valley Components Ltd",
+  "country": "GB",
+  "website": "tvcomponents.co.uk",
+  "address": {
+    "line1": "Unit 4, Kennet Side",
+    "city": "Reading",
+    "state": "Berkshire",
+    "postal_code": "RG1 3EA"
+  },
+  "contact": {
+    "name": "Rajesh Patel",
+    "email": "rajesh.patel@gmail.com",
+    "phone": "+44 118 496 0000"
+  },
+  "tax": {
+    "tax_id": "GB987654321"
+  },
+  "bank": {
+    "account_holder": "Rajesh Patel",
+    "account_number": "63849201",
+    "sort_code": "20-45-77",
+    "bank_name": "Barclays",
+    "country": "GB"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "legal_name": "Lone Star Packaging LLC",
+  "country": "US",
+  "website": "lonestarpack.com",
+  "address": {
+    "line1": "2200 Commerce St",
+    "city": "Dallas",
+    "state": "Texas",
+    "postal_code": "75201"
+  },
+  "contact": {
+    "name": "Mark Reyes",
+    "email": "ap@lonestarpack.com",
+    "phone": "+1 214 555 0142"
+  },
+  "tax": {
+    "tax_id": "74-2841937"
+  },
+  "bank": {
+    "account_holder": "Lone Star Packaging, LLC",
+    "account_number": "4410998877",
+    "routing_number": "111000025",
+    "bank_name": "Frost Bank",
+    "country": "US"
+  }
+}

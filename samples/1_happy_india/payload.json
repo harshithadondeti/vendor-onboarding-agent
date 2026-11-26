@@ -1,0 +1,27 @@
+{
+  "legal_name": "Bharat Freight Solutions Private Limited",
+  "country": "IN",
+  "website": "https://bharatfreight.in",
+  "address": {
+    "line1": "14 Ballard Estate, Shoorji Vallabhdas Marg",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "postal_code": "400001"
+  },
+  "contact": {
+    "name": "Anita Desai",
+    "email": "anita.desai@bharatfreight.in",
+    "phone": "+91 22 4000 1234"
+  },
+  "tax": {
+    "tax_id": "27AAACB7712M1ZJ",
+    "pan": "AAACB7712M"
+  },
+  "bank": {
+    "account_holder": "Bharat Freight Solutions Pvt Ltd",
+    "account_number": "50200012345678",
+    "ifsc": "HDFC0000123",
+    "bank_name": "HDFC Bank",
+    "country": "IN"
+  }
+}

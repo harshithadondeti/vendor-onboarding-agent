@@ -1,0 +1,5 @@
+{
+  "title": "Happy path \u2014 US packaging supplier",
+  "expect": "approved",
+  "why": "Shows the same engine handling a different country's rules (EIN, ABA checksum)."
+}

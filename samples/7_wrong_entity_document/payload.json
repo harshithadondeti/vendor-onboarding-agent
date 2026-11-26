@@ -1,0 +1,27 @@
+{
+  "legal_name": "Trident Cold Chain Private Limited",
+  "country": "IN",
+  "website": "tridentcoldchain.in",
+  "address": {
+    "line1": "Survey 41, Shamshabad Road",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "postal_code": "501218"
+  },
+  "contact": {
+    "name": "Priya Reddy",
+    "email": "priya@tridentcoldchain.in",
+    "phone": "+91 40 6600 1200"
+  },
+  "tax": {
+    "tax_id": "36AAGCT4471H1Z5",
+    "pan": "AAGCT4471H"
+  },
+  "bank": {
+    "account_holder": "Trident Cold Chain Pvt Ltd",
+    "account_number": "35010045678901",
+    "ifsc": "SBIN0004520",
+    "bank_name": "State Bank of India",
+    "country": "IN"
+  }
+}

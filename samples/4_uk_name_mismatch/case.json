@@ -1,0 +1,5 @@
+{
+  "title": "Edge \u2014 bank account in a person's name + invalid VAT",
+  "expect": "pending",
+  "why": "Company pays into the director's personal account; VAT fails mod-97; contact uses Gmail."
+}

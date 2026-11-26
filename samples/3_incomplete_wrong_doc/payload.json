@@ -1,0 +1,27 @@
+{
+  "legal_name": "Sahyadri Agro Exports Pvt Ltd",
+  "country": "IN",
+  "website": "sahyadriagro.com",
+  "address": {
+    "line1": "Plot 22, Hadapsar MIDC",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "postal_code": "411013"
+  },
+  "contact": {
+    "name": "Vikram Jadhav",
+    "email": "vikram@sahyadriagro.com",
+    "phone": ""
+  },
+  "tax": {
+    "tax_id": "27AAICS3390P1ZM",
+    "pan": "AAICS3390P"
+  },
+  "bank": {
+    "account_holder": "Sahyadri Agro Exports Pvt Ltd",
+    "account_number": "001234567890",
+    "ifsc": "ICIC0000456",
+    "bank_name": "ICICI Bank",
+    "country": "IN"
+  }
+}

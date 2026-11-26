@@ -1,0 +1,27 @@
+{
+  "legal_name": "Nizam Logistics Private Limited",
+  "country": "IN",
+  "website": "nizamlogistics.in",
+  "address": {
+    "line1": "3-6-145 Himayatnagar",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "postal_code": "500029"
+  },
+  "contact": {
+    "name": "Farhan Ali",
+    "email": "farhan@nizamlogistics.in",
+    "phone": "+91 40 2322 9090"
+  },
+  "tax": {
+    "tax_id": "36AAFCN6610D1ZR",
+    "pan": "AAFCN6610D"
+  },
+  "bank": {
+    "account_holder": "Nizam Logistics Pvt Ltd",
+    "account_number": "50100277881234",
+    "ifsc": "HDFC0001177",
+    "bank_name": "HDFC Bank",
+    "country": "IN"
+  }
+}
